@@ -34,7 +34,9 @@ class ViewController: UIViewController {
             }
         }
         for combination in winningCombinations {
-            // hitting below would mean a 3 in a row combo occured of 1, 1, 1 or 2, 2, 2
+            // hitting below would mean a 3 in a row combo occured of 1, 1, 1 or 2, 2, 2 when calling gameState[combination[i]]
+            // and 0, 1, 2 maps to a spot on the game board / gameState
+            // loop through each winning combination on the game board and validate if value is 1, 1, 1 or 2, 2, 2
             print(gameState)
             if gameState[combination[0]] != 0 && gameState[combination[0]] == gameState[combination[1]] && gameState[combination[1]] == gameState[combination[2]] {
                 gameIsActive = false
@@ -57,6 +59,7 @@ class ViewController: UIViewController {
                 break
             }
         }
+        //once we hit below, we know there was no possibility of wins, and no 0's in the game board/gameState
         if gameIsActive == false {
             winnerLabel.text = "IT WAS A DRAW"
             winnerLabel.isHidden = false
@@ -72,12 +75,10 @@ class ViewController: UIViewController {
         winnerLabel.isHidden = true
         winnerLabel.text = ""
         for i in 1...9 {
-            let button = view.viewWithTag(i) as! UIButton
-            button.setImage(nil, for: UIControlState())
+            if let button = view.viewWithTag(i) as? UIButton {
+                button.setImage(nil, for: UIControlState())
+            }
         }
     }
-    
-    
-
 }
 
